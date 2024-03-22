@@ -20,6 +20,10 @@ const productsSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    category: {
+        type: String,
+        required:true,
+    },
     status: {
         type: Boolean,
         required:true,

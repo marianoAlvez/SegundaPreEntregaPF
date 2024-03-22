@@ -8,14 +8,15 @@ const productsService = new ProductsService();
 //localhost:8080/api/products?limit=5&page=1
 //localhost:8080/api/products?limit=5&page=1&sort=dec
 //localhost:8080/api/products?limit=5&page=1&query=Product 2
+//localhost:8080/api/products?category=Category%20A
+//localhost:8080/api/products?status=true
 router.get('/', async (req, res) => {
-  const { limit, page, sort, query } = req.query;
   try {
-    const products = await productsService.getAllProducts(Number(limit), Number(page), sort, query);
-    res.status(200).send({ status: "success", payload: products });
+      const products = await productsService.getAllProducts(req.query);
+      res.status(200).send({ status: "success", payload: products });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ status: "error",  error: error.message});
+      console.log(error);
+      res.status(500).send({ status: "error",  error: error.message});
   }
 });
 
