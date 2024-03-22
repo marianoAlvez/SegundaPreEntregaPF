@@ -1,0 +1,158 @@
+[
+    {
+        "title": "Product 1",
+        "description": "Description of product 1",
+        "code": "P001",
+        "price": 101.99,
+        "status": false,
+        "stock": 16,
+        "category": "Category A",
+        "thumbnails": [
+            "image1.jpg",
+            "image2.jpg"
+        ]
+    },
+    {
+        "title": "Product 2",
+        "description": "Description of product 2",
+        "code": "P002",
+        "price": 201.99,
+        "status": true,
+        "stock": 26,
+        "category": "Category B",
+        "thumbnails": [
+            "image3.jpg",
+            "image4.jpg"
+        ]
+    },
+    {
+        "title": "Product 3",
+        "description": "Description of product 3",
+        "code": "P003",
+        "price": 301.99,
+        "status": true,
+        "stock": 46,
+        "category": "Category C",
+        "thumbnails": [
+            "image5.jpg",
+            "image6.jpg"
+        ]
+    },
+    {
+        "title": "Product 4",
+        "description": "Description of product 4",
+        "code": "P004",
+        "price": 302.99,
+        "status": true,
+        "stock": 47,
+        "category": "Category A",
+        "thumbnails": [
+            "image7.jpg",
+            "image8.jpg"
+        ]
+    },
+    {
+        "title": "Product 5",
+        "description": "Description of product 5",
+        "code": "P005",
+        "price": 303.99,
+        "status": false,
+        "stock": 48,
+        "category": "Category A",
+        "thumbnails": [
+            "image9.jpg",
+            "image10.jpg"
+        ]
+    },
+    {
+        "title": "Product 6",
+        "description": "Description of product 6",
+        "code": "P006",
+        "price": 304.99,
+        "status": false,
+        "stock": 49,
+        "category": "Category A",
+        "thumbnails": [
+            "image11.jpg",
+            "image12.jpg"
+        ]
+    },
+    {
+        "title": "Product 7",
+        "description": "Description of product 7",
+        "code": "P007",
+        "price": 305.99,
+        "status": false,
+        "stock": 50,
+        "category": "Category A",
+        "thumbnails": [
+            "image13.jpg",
+            "image14.jpg"
+        ]
+    },
+    {
+        "title": "Product 8",
+        "description": "Description of product 8",
+        "code": "P008",
+        "price": 306.99,
+        "status": false,
+        "stock": 51,
+        "category": "Category A",
+        "thumbnails": [
+            "image15.jpg",
+            "image16.jpg"
+        ]
+    },
+    {
+        "title": "Product 9",
+        "description": "Description of product 9",
+        "code": "P009",
+        "price": 307.99,
+        "status": false,
+        "stock": 52,
+        "category": "Category A",
+        "thumbnails": [
+            "image17.jpg",
+            "image18.jpg"
+        ]
+    },
+    {
+        "title": "Product 10",
+        "description": "Description of product 10",
+        "code": "P010",
+        "price": 308.99,
+        "status": false,
+        "stock": 53,
+        "category": "Category A",
+        "thumbnails": [
+            "image19.jpg",
+            "image20.jpg"
+        ]
+    },
+    {
+        "title": "Product 11",
+        "description": "Description of product 11",
+        "code": "P011",
+        "price": 309.99,
+        "status": false,
+        "stock": 54,
+        "category": "Category A",
+        "thumbnails": [
+            "image21.jpg",
+            "image22.jpg"
+        ]
+    },
+    {
+        "title": "Product 12",
+        "description": "Description of product 12",
+        "code": "P012",
+        "price": 310.99,
+        "status": false,
+        "stock": 55,
+        "category": "Category A",
+        "thumbnails": [
+            "image23.jpg",
+            "image24.jpg"
+        ]
+    }
+]
