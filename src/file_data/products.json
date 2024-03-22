@@ -1,0 +1,44 @@
+[
+	{
+        "title": "Product 1",
+        "description": "Description of product 1",
+        "code": "P001",
+        "price": 350.99,
+        "status": false,
+        "stock": 45,
+        "category": "Category B",
+        "thumbnails": [
+            "image1.jpg",
+            "image2.jpg"
+        ],
+        "id": "99d15b5b-d3b7-497e-a45f-7ed734d308a5"
+    },
+    {
+		"title": "Product 2",
+		"description": "Description of product 2",
+		"code": "P002",
+		"price": 350.99,
+		"status": false,
+		"stock": 45,
+		"category": "Category B",
+		"thumbnails": [
+			"image3.jpg",
+			"image4.jpg"
+		],
+		"id": "c9dbd96d-e790-45e9-8ec6-c53595e8723d"
+	},
+	{
+		"title": "Product 3",
+		"description": "Description of product 3",
+		"code": "P003",
+		"price": 350.99,
+		"status": false,
+		"stock": 45,
+		"category": "Category B",
+		"thumbnails": [
+			"image5.jpg",
+			"image6.jpg"
+		],
+		"id": "6050c833-ada4-432f-8312-eb724df5260b"
+	}
+]

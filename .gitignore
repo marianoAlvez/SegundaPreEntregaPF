@@ -1,0 +1,22 @@
+# Dependencias instaladas
+/node_modules
+
+# Archivos de configuración
+.env
+
+# Directorio de construcción
+/dist
+
+# Archivos de registro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos generados por IDEs/editores
+.vscode/
+.idea/
+
+# Otros archivos y directorios
+*.log
+*.swp
+.DS_Store
