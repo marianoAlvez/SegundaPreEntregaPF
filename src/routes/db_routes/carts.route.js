@@ -8,7 +8,7 @@ const cartsService = new CartsService();
 router.get("/:cid", async (req, res) => {
     try {
         const cid = req.params.cid;
-        const cart = await cartsService.getCartById(cid).populate('products');
+        const cart = await cartsService.getCartById(cid);
         res.send({ status: "success", payload: cart });
     } catch (error) {
         console.log(error);
@@ -16,8 +16,7 @@ router.get("/:cid", async (req, res) => {
     }
 });
 
-// POST /api/carts
-//Crea un carrito vacio
+// POST /api/carts este endpoint crea un carrito vacio
 router.post("/", async (req, res) => {
     try {
         const newCart = await cartsService.createCart();
@@ -28,8 +27,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-// POST /api/carts/:cid/product/:pid
-//Agrega un producto a un carrito
+// POST /api/carts/:cid/product/:pid Este endpoint agrega un producto a un carrito
 router.post("/:cid/product/:pid", async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
