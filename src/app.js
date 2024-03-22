@@ -1,15 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const handlebars = require("express-handlebars");
 const productFsRouter = require('./routes/file_routes/products.route');
 const cartFsRouter = require('./routes/file_routes/carts.route');
 const productRoutes = require('./routes/db_routes/products.route');
 const cartRoutes = require('./routes/db_routes/carts.route');
-const multer = require('./utils');
 
-//Declarando Express para usar sus funciones.
+/** ★━━━━━━━━━━━★ Declarando Express ★━━━━━━━━━━━★ */
 const app = express();
 
-//Middlewares
+/** ★━━━━━━━━━━━★ Configurando Handlebars ★━━━━━━━━━━━★ */
+app.engine("hbs", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "hbs");
+app.use(express.static('public'));
+
+/** ★━━━━━━━━━━━★  Middlewares ★━━━━━━━━━━━★ */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -27,6 +33,7 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
+/** ★━━━━━━━━━━━★ Configurando Mongo ★━━━━━━━━━━━★ */
 const connectMongoDB = async ()=>{
     const stringConnection = 'mongodb://127.0.0.1:27017/ecommerce?retryWrites=true&w=majority' //todo pasar a .env
     try {
