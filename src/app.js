@@ -1,19 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const handlebars = require("express-handlebars");
+const path = require('path');
+const hbs  = require('express-handlebars');
 const productFsRouter = require('./routes/file_routes/products.route');
 const cartFsRouter = require('./routes/file_routes/carts.route');
 const productRoutes = require('./routes/db_routes/products.route');
 const cartRoutes = require('./routes/db_routes/carts.route');
+const viewsRouter = require('./routes/views.route');
 
 /** ★━━━━━━━━━━━★ Declarando Express ★━━━━━━━━━━━★ */
 const app = express();
 
 /** ★━━━━━━━━━━━★ Configurando Handlebars ★━━━━━━━━━━━★ */
-app.engine("hbs", handlebars.engine());
-app.set("views", __dirname + "/views");
-app.set("view engine", "hbs");
-app.use(express.static('public'));
+const handlebars = hbs.create({
+    defaultLayout: 'main',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+});
+
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
 
 /** ★━━━━━━━━━━━★  Middlewares ★━━━━━━━━━━━★ */
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +35,8 @@ app.use('/fs/carts', cartFsRouter);
 // con MongoDB
 app.use('/api/products', productRoutes);
 app.use('/api/carts', cartRoutes);
+// con Handlebars
+app.use('/', viewsRouter);;
 
 
 const port = 8080; //todo pasar a .env
