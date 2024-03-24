@@ -7,7 +7,7 @@ class ProductsService {
 
     async getAllProducts(params) {
         const { 
-            limit = 10, 
+            limit = 5, 
             page = 1, 
             sort = null, 
             query = null, 
