@@ -37,4 +37,16 @@ router.get("/cart/:cid", async (req, res) => {
   }
 });
 
+// POST /cart/:cid/add/:pid
+router.post('/cart/:cid/add/:pid', async (req, res) => {
+  const { cid, pid } = req.params;
+  const { quantity } = req.body;
+  try {
+    await cartsService.addProductsToCart(cid, pid, quantity);
+    res.status(200).send({ message: 'Producto agregado al carrito' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Error al agregar el producto al carrito' });
+  }
+});
 module.exports = router;
