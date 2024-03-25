@@ -5,11 +5,11 @@ class CartsService {
         this.cartsModel = cartsModels;
     }
 // Este metodo busca un carrito por su id y trae todos los productos que tiene con Populate
-    async getCartById(cartId) {
+    async getCartById(cid) {
         //En este código, populate('products.product') le dice a Mongoose que remplaze 
         //los IDs de los productos en el carrito con los documentos de productos completos 
         //de la colección de productos.
-        return await this.cartsModel.findById(cartId).populate('products.product');
+        return await this.cartsModel.findById(cid).populate('products.product');
     }
 
     // Este metodo crea un carrito vacio

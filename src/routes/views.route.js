@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const productsModel = require("../models/mongo_models/products.schema.js");
-const cartsModel = require("../models/mongo_models/carts.schema.js");
+const CartsService = require('../services/db_services/carts.service');
+const cartsService = new CartsService();
 
 // GET /products
 router.get("/products", async (req, res) => {
@@ -30,7 +31,7 @@ router.get("/products", async (req, res) => {
 router.get("/cart/:cid", async (req, res) => {
   let cid = req.params.cid;
   try {
-    let cart = await cartsModel.findById(cid).populate("products.product");
+    const cart = await cartsService.getCartById(cid);
     console.log(cart);
     res.render("cart", cart);
   } catch (error) {
