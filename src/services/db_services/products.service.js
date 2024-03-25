@@ -7,7 +7,7 @@ class ProductsService {
 
     async getAllProducts(params) {
         const { 
-            limit = 3, // default limit = 3
+            limit = 2, // default limit = 3
             page = 1, // default page = 1
             sort = null, 
             query = null, 

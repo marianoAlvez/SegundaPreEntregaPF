@@ -1,30 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const productsModel = require("../models/mongo_models/products.schema.js");
+const ProductsService = require('../services/db_services/products.service');
+const productsService = new ProductsService();
 const CartsService = require('../services/db_services/carts.service');
 const cartsService = new CartsService();
 
 // GET /products
 router.get("/products", async (req, res) => {
-  let page = parseInt(req.query.page);
-  let limit = parseInt(req.query.limit) || 3; // default limit = 3
-
-  if (!page) page = 1; // default page = 1
-  let result = await productsModel.paginate(
-    {},
-    { page, limit: limit, lean: true }
-  );
-
-  result.prevLink = result.hasPrevPage
-    ? `http://localhost:8080/products?page=${result.prevPage}`
-    : "";
-  result.nextLink = result.hasNextPage
-    ? `http://localhost:8080/products?page=${result.nextPage}`
-    : "";
-
-  result.isValid = !(page < 1 || page > result.totalPages);
-
-  res.render("products", result);
+  try {
+    const result = await productsService.getAllProducts(req.query);
+    result.prevLink = result.hasPrevPage
+      ? `http://localhost:8080/products?page=${result.prevPage}`
+      : "";
+    result.nextLink = result.hasNextPage
+      ? `http://localhost:8080/products?page=${result.nextPage}`
+      : "";
+    result.isValid = !(req.query.page < 1 || req.query.page > result.totalPages);
+    console.log('result: ', result);
+    res.render("products", result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener los productos');
+  }
 });
 
 // GET /cart/:cid
@@ -35,7 +32,8 @@ router.get("/cart/:cid", async (req, res) => {
     console.log(cart);
     res.render("cart", cart);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send('Error al obtener el carrito');
   }
 });
 
