@@ -7,8 +7,8 @@ class ProductsService {
 
     async getAllProducts(params) {
         const { 
-            limit = 5, 
-            page = 1, 
+            limit = 3, // default limit = 3
+            page = 1, // default page = 1
             sort = null, 
             query = null, 
             category = null, 
@@ -41,6 +41,8 @@ class ProductsService {
         }
     
         const result = await this.productsModel.paginate(searchQuery, options);
+        console.log("🚀 ~ ProductsService ~ getAllProducts ~ result:", result)
+        
         return result;
     }
 
