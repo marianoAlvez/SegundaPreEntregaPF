@@ -29,6 +29,8 @@ class CartsService {
 
   // Este metodo agrega un producto a un carrito
   async addProductsToCart(cartId, productId, quantity) {
+    quantity= Number(quantity);
+  
     const cart = await this.cartsModel.findById(cartId);
     const product = cart.products.find(
       (product) => product.product.toString() === productId
@@ -37,7 +39,7 @@ class CartsService {
     if (product) {
       product.quantity += quantity;
     } else {
-      cart.products.push({ product: productId, quantity });
+      cart.products.push({ product: productId ,quantity });
     }
 
     return await cart.save();
