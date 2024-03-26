@@ -9,15 +9,15 @@
     <p>Cantidad: {{this.quantity}}</p>
     <div>
         <p>Subtotal: $ {{multiply this.product.price this.quantity}}</p>    
-    </div>
-    <form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
-        <input type="hidden" name="quantity" value="{{add this.quantity 1}}">
-        <button type="submit">Agregar uno</button>
-    </form>
-    <form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
-        <input type="hidden" name="quantity" value="{{subtract this.quantity 1}}">
-        <button type="submit">Quitar uno</button>
-    </form>
+</div>
+<form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit">+1</button>
+</form>
+<form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
+    <input type="hidden" name="quantity" value="-1">
+    <button type="submit">-1</button>
+</form>
     <form action="/cart/{{../cartId}}/remove/{{this._id}}" method="post">
         <button type="submit">Eliminar del carrito</button>
     </form>
