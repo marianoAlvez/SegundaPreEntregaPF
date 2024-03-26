@@ -49,20 +49,28 @@ class ProductsService {
     return await this.productsModel.findById(productId);
   }
 
-  async addProduct(productData) {
+
+  async addProduct(productData) {    
+    const productList = await this.getAllProducts({});
+    const productExist = productList.products.find(
+      (product) => product.code === productData.code
+    ); 
+    if (productExist) {
+      throw new Error( `El producto con el codigo: ${productData.code} ya existe` );     
+    }
     return await this.productsModel.create(productData);
   }
 
-  async updateProductById(cid, updatedProductData) {
+  async updateProductById(pid, updatedProductData) {
     return await this.productsModel.findByIdAndUpdate(
-      cid,
+      pid,
       updatedProductData,
       { new: true }
     );
   }
 
-  async deleteProductById(productId) {
-    return await this.productsModel.findByIdAndDelete(productId);
+  async deleteProductById(pid) {
+    return await this.productsModel.findByIdAndDelete(pid);
   }
 }
 
