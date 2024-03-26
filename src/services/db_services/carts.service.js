@@ -1,8 +1,9 @@
 const cartsModels = require("../../models/mongo_models/carts.schema");
-
+const productsModels = require("../../models/mongo_models/products.schema");
 class CartsService {
   constructor() {
     this.cartsModel = cartsModels;
+    this.productsModels = productsModels;
   }
 
   // Este metodo obtiene o crea un carrito para usarlo en la vista de productos.
@@ -29,11 +30,11 @@ class CartsService {
 
   // Este metodo agrega un producto a un carrito
   async addProductsToCart(cartId, productId, quantity) {
-    quantity= Number(quantity);
+    // quantity= Number(quantity);
   
     const cart = await this.cartsModel.findById(cartId);
     const product = cart.products.find(
-      (product) => product.product.toString() === productId
+      (product) => product.product.toString() === productId.toString()
     );
 
     if (product) {
@@ -45,31 +46,37 @@ class CartsService {
     return await cart.save();
   }
 
+    // Este metodo actualiza la cantidad de un producto en el carrito.
+    async updateProductQuantity(cartId, pid, quantity) {
+      const cart = await this.cartsModel.findById(cartId);
+      const product = cart.products.find(
+        (product) => product._id.toString() === pid
+      );
+
+      if (product) {      
+        let newQuantity = product.quantity + Number(quantity);
+  
+        // Si la nueva cantidad es negativa, la establecemos en 0.
+        if (newQuantity < 0) {
+          newQuantity = 0;
+        }
+        
+        // Si la nueva cantidad es mayor que el stock del producto, la establecemos en el stock.
+        const productInDb = await this.productsModels.findById(product.product);        
+        if (newQuantity > productInDb?.stock) {
+          newQuantity = productInDb?.stock;
+        }
+  
+        product.quantity = newQuantity;      }
+      return cart.save();
+  }
+
   // Este metodo elimina un producto específico del carrito.
-  async removeProductFromCart(cid, pid) {
-    const cart = await this.Cart.findById(cid);
+  async removeProductFromCart(cartId, pid) {
+    const cart = await this.cartsModel.findById(cartId);
     cart.products = cart.products.filter(
       (product) => product._id.toString() !== pid
     );
-    return cart.save();
-  }
-
-  // Este metodo actualizará el carrito con un arreglo de productos.
-  async updateCart(cid, products) {
-    const cart = await this.Cart.findById(cid);
-    cart.products = products;
-    return cart.save();
-  }
-
-  // Este metodo actualiza la cantidad de un producto en el carrito.
-  async updateProductQuantity(cid, pid, quantity) {
-    const cart = await this.Cart.findById(cid);
-    const product = cart.products.find(
-      (product) => product._id.toString() === pid
-    );
-    if (product) {
-      product.quantity = quantity;
-    }
     return cart.save();
   }
 
