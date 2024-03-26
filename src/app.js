@@ -15,6 +15,7 @@ const app = express();
 /** ★━━━━━━━━━━━★ Configurando Handlebars ★━━━━━━━━━━━★ */
 const handlebars = hbs.create({
   defaultLayout: "main",
+  partialsDir: path.join(__dirname, 'views/partials'),
   runtimeOptions: {
     allowProtoPropertiesByDefault: true,
     allowProtoMethodsByDefault: true,
@@ -34,9 +35,9 @@ Handlebars.registerHelper("multiply", function (value1, value2) {
   return value1 * value2;
 });
 
-app.engine("handlebars", handlebars.engine);
+app.engine('handlebars', handlebars.engine);
 app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views/"));
 
 /** ★━━━━━━━━━━━★  Middlewares ★━━━━━━━━━━━★ */
 app.use(express.urlencoded({ extended: true }));
