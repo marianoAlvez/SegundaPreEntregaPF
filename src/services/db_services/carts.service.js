@@ -56,8 +56,8 @@ class CartsService {
       if (product) {      
         let newQuantity = product.quantity + Number(quantity);
   
-        // Si la nueva cantidad es negativa, borro producto del carrito.
-        if (newQuantity === 0) {   
+        // Si la nueva cantidad es 0, borro producto del carrito.
+        if (newQuantity <= 0) {   
           await this.removeProductFromCart(cartId, pid)
           return;          
         }
