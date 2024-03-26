@@ -82,7 +82,10 @@ class CartsService {
 
   // Este metodo limpia un carrito.
   async clearCart(cid) {
-    const cart = await this.Cart.findById(cid);
+    const cart = await this.cartsModel.findById(cid);
+    if (!cart) {
+      throw new Error("El carrito no existe");
+    }
     cart.products = [];
     return cart.save();
   }
