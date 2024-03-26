@@ -41,7 +41,6 @@ class ProductsService {
     }
 
     const result = await this.productsModel.paginate(searchQuery, options);
-    console.log("🚀 ~ ProductsService ~ getAllProducts ~ result:", result);
 
     return result;
   }
