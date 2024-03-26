@@ -16,6 +16,7 @@ class ProductsService {
     } = params;
 
     const options = {
+      query: query,
       page: Number(page),
       limit: Number(limit),
       sort: sort ? { price: sort === "asc" ? 1 : -1 } : {},
@@ -41,7 +42,6 @@ class ProductsService {
     }
 
     const result = await this.productsModel.paginate(searchQuery, options);
-
     return result;
   }
 
