@@ -49,7 +49,7 @@ router.post("/cart/:cid/add/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;    
     const { quantity } = req.body;
-    await cartsService.addProductsToCart(cid, pid, quantity);
+    await cartsService.addProductsToCart(cid, pid, Number(quantity));
     res.redirect("/cart");
   } catch (error) {
     console.error(error);
