@@ -1,3 +1,4 @@
+<h1>Editar Producto</h1>
 <form action="/products/update/{{this._id}}" method="post">
     <label for="title">Título:</label> 
     <input type="text" id="title" name="title" value="{{this.title}}" required pattern="\S+.*" title="El título no puede estar vacío.">
@@ -13,6 +14,5 @@
     <label for="stock">Stock:</label>
     <input type="number" id="stock" name="stock" value="{{this.stock}}" required min="0" title="El stock no puede ser negativo.">
     <br/><br/>
-    <!-- Agrega aquí más campos según sea necesario -->
     <button type="submit">Guardar cambios</button>
 </form>
