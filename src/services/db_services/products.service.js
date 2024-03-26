@@ -53,9 +53,10 @@ class ProductsService {
     return await this.productsModel.create(productData);
   }
 
-  async updateProductById(productId, updatedProductData) {
+  async updateProductById(cid, updatedProductData) {
+    console.log("Service: ",cid, updatedProductData);
     return await this.productsModel.findByIdAndUpdate(
-      productId,
+      cid,
       updatedProductData,
       { new: true }
     );
