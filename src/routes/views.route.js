@@ -27,13 +27,17 @@ router.get("/products", async (req, res) => {
   }
 });
 
+
+//******************************/
+//* CRUD de Carrito de Compras */
+//******************************/
+
 // GET /cart
 router.get("/cart", async (req, res) => {
   try {
     // Busca el primer carrito disponible o crea uno nuevo si no hay ninguno.
     const cartId = await cartsService.getOrCreateCart();
     const cid = cartId._id.toString();
-    console.log("🚀 ~ router.get ~ cid:", cid)
     // Usa el método getCartById para obtener el carrito con todos sus productos.
     const cart = await cartsService.getCartById(cid);
     cart.cartId = cid; // Agrega el id del carrito al resultado para usarlo en CRUD  
@@ -57,6 +61,7 @@ router.post("/cart/:cid/add/:pid", async (req, res) => {
   }
 });
 
+// POST /cart/:cid/update/:pid (actualizar cantidad de producto en el carrito)
 router.post('/cart/:cid/update/:pid', async (req, res) => {
   const { pid } = req.params;
   const { quantity } = req.body;
@@ -71,6 +76,7 @@ router.post('/cart/:cid/update/:pid', async (req, res) => {
   }
 });
 
+// POST /cart/:cid/remove/:pid (eliminar producto del carrito)
 router.post('/cart/:cid/remove/:pid', async (req, res) => {
   const { pid } = req.params;
   try {
@@ -83,4 +89,18 @@ router.post('/cart/:cid/remove/:pid', async (req, res) => {
     res.status(500).send('Error al eliminar el producto del carrito');
   }
 });
+
+// POST /cart/:cid/clean (limpiar carrito)
+router.post('/cart/:cid/empty', async (req, res) => {
+  const { cid } = req.params;
+  try {
+    await cartsService.clearCart(cid);
+    console.log("Carrito Limpiado")
+    res.redirect('/cart');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al eliminar el carrito');
+  }
+});
+
 module.exports = router;
