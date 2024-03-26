@@ -22,14 +22,11 @@ class CartManager {
             }
 
             const carts = JSON.parse(data);
-            console.log("getCartById", carts);
             const cart = carts.find((cart) => cart.id === cid.toString());
       
             if (!cart) {
-              console.log("Carrito no encontrado");
               throw new Error("Carrito no encontrado");
             }
-            console.log("getProductsByCartId", cart);
             return cart;
           } catch (error) {
             console.log(error);
@@ -49,7 +46,6 @@ class CartManager {
             };
             carts.push(newCart);
             await fs.promises.writeFile( this.cartsFilePath, JSON.stringify(carts, null, "\t"));
-            console.log("Nuevo carrito creado:", newCart);
             return newCart;
         } catch (error) {
           console.error("Error al crear el carrito:", error);
@@ -71,7 +67,6 @@ class CartManager {
 
         const cartList = JSON.parse(data);
         const cartIndex = cartList.findIndex((cart) => cart.id === cid);
-        console.log("updateCartProductsById", cartList);
 
         if (cartIndex === -1) {
             throw new Error(`No se encontró ningún carrito con el ID ${cid}`);
@@ -80,7 +75,6 @@ class CartManager {
         const productIndex = cartList[cartIndex].products.findIndex(
         (product) => product.product === pid
         );
-        console.log("updateCartProductsById", productIndex);
         if(quantity < 1) {
             throw new Error(`La cantidad debe ser mayor a 0`);
         }

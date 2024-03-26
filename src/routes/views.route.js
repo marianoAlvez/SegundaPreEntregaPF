@@ -120,7 +120,6 @@ router.post('/cart/:cid/empty', async (req, res) => {
   const { cid } = req.params;
   try {
     await cartsService.clearCart(cid);
-    console.log("Carrito Limpiado")
     res.redirect('/cart');
   } catch (error) {
     console.error(error);
