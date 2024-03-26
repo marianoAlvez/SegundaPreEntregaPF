@@ -27,6 +27,31 @@ router.get("/products", async (req, res) => {
   }
 });
 
+// GET /products/update/:id (vista para editar un producto)
+router.get('/products/update/:cid', async (req, res) => {
+  const { cid } = req.params;
+  try {
+    const product = await productsService.getProductById(cid);
+    res.render('edit-product',  product );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: "error", error: error.message });
+  }
+});
+
+//POST products/update/:cid editar un producto
+router.post("/products/update/:cid", async (req, res) => {
+  const { cid } = req.params;
+  const updatedProductData = req.body;
+  try {
+    await productsService.updateProductById(cid, updatedProductData);
+    res.redirect('/products');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: "error", error: error.message });
+  }
+});
+
 
 //******************************/
 //* CRUD de Carrito de Compras */
