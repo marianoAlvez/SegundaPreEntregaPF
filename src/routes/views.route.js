@@ -5,6 +5,10 @@ const productsService = new ProductsService();
 const CartsService = require("../services/db_services/carts.service");
 const cartsService = new CartsService();
 
+//*********************/
+//* CRUD de Productos */
+//*********************/
+
 // GET /products
 router.get("/products", async (req, res) => {
   try {
@@ -27,11 +31,26 @@ router.get("/products", async (req, res) => {
   }
 });
 
-// GET /products/update/:id (vista para editar un producto)
-router.get('/products/update/:cid', async (req, res) => {
-  const { cid } = req.params;
+router.get("/products/add-product", (req, res) => {
+  res.render("add-product");
+});
+
+router.post("/products/add-product", async (req, res) => {
+  const newProduct = req.body;
   try {
-    const product = await productsService.getProductById(cid);
+    await productsService.addProduct(newProduct);
+    res.redirect("/products");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al agregar el producto");
+  }
+});
+
+// GET /products/update/:id (vista para editar un producto)
+router.get('/products/update/:pid', async (req, res) => {
+  const { pid } = req.params;
+  try {
+    const product = await productsService.getProductById(pid);
     res.render('edit-product',  product );
   } catch (error) {
     console.log(error);
@@ -40,11 +59,11 @@ router.get('/products/update/:cid', async (req, res) => {
 });
 
 //POST products/update/:cid editar un producto
-router.post("/products/update/:cid", async (req, res) => {
-  const { cid } = req.params;
+router.post("/products/update/:pid", async (req, res) => {
+  const { pid } = req.params;
   const updatedProductData = req.body;
   try {
-    await productsService.updateProductById(cid, updatedProductData);
+    await productsService.updateProductById(pid, updatedProductData);
     res.redirect('/products');
   } catch (error) {
     console.log(error);
