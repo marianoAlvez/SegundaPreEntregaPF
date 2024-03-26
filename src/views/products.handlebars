@@ -46,6 +46,11 @@
                 <button type="submit">Editar producto</button>
             </form>
         </div>
+        <div>
+            <form action="/products/delete/{{this._id}}" method="post">
+                <button type="submit">Eliminar producto</button>
+            </form>
+        </div>
     {{/each}}
 </div>
 <br />

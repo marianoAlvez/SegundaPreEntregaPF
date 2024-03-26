@@ -46,7 +46,7 @@ router.post("/products/add-product", async (req, res) => {
   }
 });
 
-// GET /products/update/:id (vista para editar un producto)
+// GET /products/update/:pid (vista para editar un producto)
 router.get('/products/update/:pid', async (req, res) => {
   const { pid } = req.params;
   try {
@@ -58,7 +58,9 @@ router.get('/products/update/:pid', async (req, res) => {
   }
 });
 
-//POST products/update/:cid editar un producto
+
+
+//POST products/update/:pid editar un producto
 router.post("/products/update/:pid", async (req, res) => {
   const { pid } = req.params;
   const updatedProductData = req.body;
@@ -68,6 +70,18 @@ router.post("/products/update/:pid", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({ status: "error", error: error.message });
+  }
+});
+
+//products/delete/{{pid}}
+router.post('/products/delete/:pid', async (req, res) => {
+  const { pid } = req.params;
+  try {
+    await productsService.deleteProductById(pid);
+    res.redirect('/products');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al eliminar el producto');
   }
 });
 
