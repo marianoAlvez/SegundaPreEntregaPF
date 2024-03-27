@@ -1,0 +1,12 @@
+.product-preview-card {
+    max-width: 400px; /* Limita el ancho máximo de la tarjeta */
+    width: 100%; /* Hace que la tarjeta ocupe todo el ancho disponible */
+    margin-bottom: 2rem; /* Añade un margen en la parte inferior de la tarjeta */
+}
+
+@media (max-width: 768px) {
+    .product-preview-card {
+        max-width: 100%; /* En pantallas pequeñas, permite que la tarjeta ocupe todo el ancho disponible */
+        margin-bottom: 2rem; /* Añade un margen en la parte inferior de la tarjeta */
+    }
+}
