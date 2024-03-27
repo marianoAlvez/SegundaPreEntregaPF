@@ -1,35 +1,70 @@
-<h1>Carrito</h1>
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between">
+        <h1 class="my-4">
+            <i class="bi bi-cart-fill me-2"></i>Carrito
+        </h1>
+        <div class="card-body d-flex justify-content-end gap-3">
+            <h5 class="card-title">Total: ${{total}}</h5>
+            <form action="/cart/{{cartId}}/checkout" method="post">
+                <button type="submit" class="btn btn-success">Comprar</button>
+            </form>
+        </div>
+    </div>
+    
 
-{{#each products}}
-<div> 
-    <h2>★━━━━★ {{this.product.title}} ★━━━━★</h2>
-    <p>{{this.product.description}}</p>
-    <p>$ {{this.product.price}}</p>
-    <p>Cantidad: {{this.quantity}}</p>
-    <div>
-        <p>Subtotal: $ {{multiply this.product.price this.quantity}}</p>    
-</div>
-<form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
-    <input type="hidden" name="quantity" value="1">
-    <button type="submit">+1</button>
-</form>
-<form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
-    <input type="hidden" name="quantity" value="-1">
-    <button type="submit">-1</button>
-</form>
-    <form action="/cart/{{../cartId}}/remove/{{this._id}}" method="post">
-        <button type="submit">Eliminar del carrito</button>
-    </form>
-</div>
-{{/each}}
+    
+    
+    {{#each products}}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="{{this.product.title}}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.product.title}}</h5>
+                    <p class="card-text">{{this.product.description}}</p>
+                    <p class="card-text"><small class="text-muted">Precio: ${{this.product.price}}</small></p>
+                    <p class="card-text">Cantidad: {{this.quantity}}</p>
+                    <p class="card-text">Subtotal: ${{multiply this.product.price this.quantity}}</p>
+                    <div class="d-flex justify-content-between">
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="col d-flex justify-content-center px-0">
+                                    <form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
+                                        <input type="hidden" name="quantity" value="-1">
+                                        <button type="submit" class="btn btn-outline-secondary shadow-sm" style="width: 50px; height: 38px;">-1</button>
+                                    </form>
+                                </div>
+                                <div class="col d-flex justify-content-center px-0">
+                                    <input type="text" class="form-control text-center border-0 shadow-sm" value="{{this.quantity}}" readonly style="height: 38px;">
+                                </div>
+                                <div class="col d-flex justify-content-center px-0">
+                                    <form action="/cart/{{../cartId}}/update/{{this._id}}" method="post">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-outline-secondary shadow-sm" style="width: 50px; height: 38px;">+1</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="/cart/{{../cartId}}/remove/{{this._id}}" method="post">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
 
-<div>
-    <h3>Total: $ {{total}}</h3>
-    <form action="/cart/{{cartId}}/checkout" method="post">
-        <button type="submit">Comprar</button>
-    </form>
-</div>
-<div>
-    <form action="/cart/{{cartId}}/empty" method="post">
-        <button type="submit">Vaciar Carrito</button>
+    <div class="mt-3">
+        <form action="/cart/{{cartId}}/empty" method="post">
+            <button type="submit" class="btn btn-warning">
+                <i class="bi bi-cart-x-fill"></i> Vaciar Carrito
+            </button>
+        </form>
+    </div>
+    <br>
 </div>
