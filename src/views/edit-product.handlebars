@@ -1,23 +1,98 @@
-<h1>Editar Producto</h1>
-<form action="/products/update/{{this._id}}" method="post">
-    <label for="title">Título:</label> 
-    <input type="text" id="title" name="title" value="{{this.title}}" required pattern="\S+.*" title="El título no puede estar vacío.">
-    <br/><br/>
-    <label for="description">Descripción:</label>
-    <textarea id="description" name="description" required pattern="\S+.*" title="La descripción no puede estar vacía.">{{this.description}}</textarea>
-    <br/><br/>
-    <label for="category">Categoría:</label>
-    <input type="text" id="category" name="category" value="{{this.category}}" required pattern="\S+.*" title="La categoría no puede estar vacía.">
-    <br/><br/>
-    <label for="price">Precio:</label>
-    <input type="text" id="price" name="price" value="{{this.price}}" required pattern="^\d+(\.\d{1,2})?$" title="El precio debe ser un número positivo con hasta dos decimales.">    <br/><br/>
-    <label for="stock">Stock:</label>
-    <input type="number" id="stock" name="stock" value="{{this.stock}}" required min="0" title="El stock no puede ser negativo.">
-    <br/><br/>
-    <button type="submit">Guardar</button>
-</form>
-<div>
-    <form action="/products" method="get">
-        <button type="submit">Volver</button>
-    </form>
+<link rel="stylesheet" href="/css/product-preview-styles.css">
+
+<div class="container">
+    <h1 class="my-4">Editar Producto</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form id="productForm" action="/products/update/{{this._id}}" method="post" class="needs-validation" novalidate>
+                <!-- Aquí va el resto de tu formulario -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Título:</label>
+                    <input type="text" id="title" name="title" value="{{this.title}}" required pattern="[A-Za-z][A-Za-z0-9\s]*" title="El título debe comenzar con letras y puede contener espacios." class="form-control">
+                    <div class="invalid-feedback">
+                        Por favor, ingresa un título válido que comience con letras y pueda contener espacios.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripción:</label>
+                    <textarea id="description" name="description" required pattern="[A-Za-z\s]+" title="La descripción debe comenzar con letras y puede contener espacios." class="form-control">{{this.description}}</textarea>
+                    <div class="invalid-feedback">
+                        Por favor, ingresa una descripción válida que comience con letras y pueda contener espacios.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="code" class="form-label">Código:</label>
+                        <input type="text" id="code" name="code" value="{{this.code}}" required pattern="\S+.*" title="El código no puede estar vacío." class="form-control">
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un código.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="category" class="form-label">Categoría:</label>
+                        <input type="text" id="category" name="category" value="{{this.category}}" required pattern="\S+.*" title="La categoría no puede estar vacía." class="form-control">
+                        <div class="invalid-feedback">
+                            Por favor, ingresa una categoría.
+                        </div>
+                    </div>
+                </div>
+                                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="status" class="form-label">Estado:</label>
+                        <select id="status" name="status" class="form-select">
+                            <option value="true">Disponible</option>
+                            <option value="false">No disponible</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="stock" class="form-label">Stock:</label>
+                        <input type="number" id="stock" name="stock" value="{{this.stock}}" required min="0" title="El stock no puede ser negativo." class="form-control">
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un stock válido.
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Precio:</label>
+                    <input type="text" id="price" name="price" value="{{this.price}}" required pattern="^\d+(\.\d{1,2})?$" title="El precio debe ser un número positivo con hasta dos decimales." class="form-control">
+                    <div class="invalid-feedback">
+                        Por favor, ingresa un precio válido.
+                    </div>
+                </div>                
+                <div class="mb-3">
+                    <label for="image" class="form-label">Imagen:</label>
+                    <input type="url" id="image" name="image" value="{{this.image}}" required title="Por favor, ingresa una URL válida." class="form-control">
+                    <div class="invalid-feedback">
+                        Por favor, ingresa una URL válida para la imagen.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="guardarBtn" disabled>Guardar</button>
+            </form>
+            <div class="mt-3">
+                <form action="/products" method="get">
+                    <button type="submit" class="btn btn-secondary">Volver</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center ">
+            <div class="d-flex flex-column align-items-center ">
+                <h5 class="card-title text-center">Vista previa</h5>
+                <br>
+                <div class="card card product-preview-card ">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen del producto">
+                    <div class="card-body">
+                        <p class="card-text">Título: <span id="preview-title">{{this.title}}</span></p>
+                        <p class="card-text">Descripción: <span id="preview-description">{{this.description}}</span></p>
+                        <p class="card-text">Código: <span id="preview-code">{{this.code}}</span></p>
+                        <p class="card-text">Categoría: <span id="preview-category">{{this.category}}</span></p>
+                        <p class="card-text">Estado: <span id="preview-status">{{this.status}}</span></p>
+                        <p class="card-text">Stock: <span id="preview-stock">{{this.stock}}</span></p>
+                        <p class="card-text">Precio: $<span id="preview-price">{{this.price}}</span></p>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="/js/product-form-validation.js"></script>
+<script src="/js/product-preview.js"></script>
