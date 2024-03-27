@@ -29,26 +29,26 @@ class CartsService {
   }
 
   // Este metodo agrega un producto a un carrito
-  async addProductsToCart(cartId, productId, quantity) {
+  async addProductsToCart(cid, pid, quantity) {
     // quantity= Number(quantity);
   
-    const cart = await this.cartsModel.findById(cartId);
+    const cart = await this.cartsModel.findById(cid);
     const product = cart.products.find(
-      (product) => product.product.toString() === productId.toString()
+      (product) => product.product.toString() === pid.toString()
     );
 
     if (product) {
       product.quantity += quantity;
     } else {
-      cart.products.push({ product: productId ,quantity });
+      cart.products.push({ product: pid ,quantity });
     }
 
     return await cart.save();
   }
 
     // Este metodo actualiza la cantidad de un producto en el carrito.
-    async updateProductQuantity(cartId, pid, quantity) {
-      const cart = await this.cartsModel.findById(cartId);
+    async updateProductQuantity(cid, pid, quantity) {
+      const cart = await this.cartsModel.findById(cid);
       const product = cart.products.find(
         (product) => product._id.toString() === pid
       );
@@ -58,7 +58,7 @@ class CartsService {
   
         // Si la nueva cantidad es 0, borro producto del carrito.
         if (newQuantity <= 0) {   
-          await this.removeProductFromCart(cartId, pid)
+          await this.removeProductFromCart(cid, pid)
           return;          
         }
         
@@ -73,8 +73,8 @@ class CartsService {
   }
 
   // Este metodo elimina un producto específico del carrito.
-  async removeProductFromCart(cartId, pid) {
-    const cart = await this.cartsModel.findById(cartId);
+  async removeProductFromCart(cid, pid) {
+    const cart = await this.cartsModel.findById(cid);
     cart.products = cart.products.filter(
       (product) => product._id.toString() !== pid
     );
