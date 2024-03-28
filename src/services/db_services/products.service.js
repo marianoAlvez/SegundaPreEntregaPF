@@ -7,7 +7,7 @@ class ProductsService {
 
   async getAllProducts(params) {
     const {
-      limit = 2, // default limit = 3
+      limit = 4, // default limit = 4
       page = 1, // default page = 1
       sort = null,
       query = null,
@@ -45,8 +45,8 @@ class ProductsService {
     return result;
   }
 
-  async getProductById(productId) {
-    return await this.productsModel.findById(productId);
+  async getProductById(pid) {
+    return await this.productsModel.findById(pid);
   }
 
 
