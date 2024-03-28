@@ -32,8 +32,8 @@
                     <form action="/cart/{{../cartId}}/add/{{this._id}}" method="post">
                         <div class="input-group">
                             <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
-                            <input type="number" id="quantity" name="quantity" min="1" max="{{this.stock}}" required class="form-control" aria-label="Cantidad">
-                            <button type="submit" class="btn btn-outline-secondary" id="inputGroupFileAddon04">
+                            <input type="number" id="quantity" name="quantity" min="1" max="{{this.stock}}" required class="form-control" aria-label="Cantidad" value="1">                            
+                            <button type="submit" class="btn btn-outline-secondary">
                                 <i class="bi bi-cart-fill"></i> Agregar
                             </button>
                         </div>
