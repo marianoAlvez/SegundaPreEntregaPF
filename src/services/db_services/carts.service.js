@@ -101,6 +101,7 @@ class CartsService {
     return await cart.save();
   }
 
+  // Este metodo calcula los subTotales y totales de un carrito debe ser llamado cada vez que se modifica el carrito.
   calculateTotals(cart) {
     let total = 0;
     for (let item of cart.products) {
