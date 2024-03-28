@@ -1,38 +1,41 @@
-// /** ★━━━━━━━━━━━★ Importa Configuraciones ★━━━━━━━━━━━★ */
+// /** ★━━━━━━━━━━━★ Configurando Handlebars ★━━━━━━━━━━━★ */
 
-const app = require("./config/express");
-const path = require('path');
-const handlebars = require("./config/handlebars");
-const connectMongoDB = require("./config/db");
+const path = require("path");
+const hbs = require("express-handlebars");
+const Handlebars = require('handlebars');
 
-// /** ★━━━━━━━━━━━★ Configurando Express ★━━━━━━━━━━━★ */
+// Configura Handlebars
 
-app.engine('handlebars', handlebars.engine);
-app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "views/"));
+// Crea una instancia de Handlebars
+const handlebars = hbs.create({
+    // Configura el layout por defecto
+    defaultLayout: "main",
 
-// /** ★━━━━━━━━━━━★ Importa las rutas ★━━━━━━━━━━━★ */
+    // Configura la carpeta donde se encuentran los parciales
+    partialsDir: path.join(__dirname, '../views/partials'),
 
-const productFsRouter = require("../routes/file_routes/products.route");
-const cartFsRouter = require("../routes/file_routes/carts.route");
-const productRoutes = require("../routes/db_routes/products.route");
-const cartRoutes = require("../routes/db_routes/carts.route");
-const viewsRouter = require("../routes/views.route");
-
-// /** ★━━━━━━━━━━━★ Configurando las rutas ★━━━━━━━━━━━★ */
-
-app.use("/fs/products", productFsRouter);
-app.use("/fs/carts", cartFsRouter);
-app.use("/api/products", productRoutes);
-app.use("/api/carts", cartRoutes);
-app.use("/", viewsRouter);
-
-// /** ★━━━━━━━━━━━★ Iniciando el servidor ★━━━━━━━━━━━★ */
-
-const port = 8080;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    // Configura Handlebars para que permita el acceso a propiedades y métodos de objetos
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
 });
 
-// /** ★━━━━━━━━━━━★ Conecta Mongo DB ★━━━━━━━━━━━★ */
-connectMongoDB();
+// Registra los helpers de Handlebars
+
+// Helper para sumar dos valores
+Handlebars.registerHelper("add", function (value1, value2) {
+    return value1 + value2;
+});
+
+// Helper para restar dos valores
+Handlebars.registerHelper("subtract", function (value1, value2) {
+    return value1 - value2;
+});
+
+// Helper para multiplicar dos valores
+// Handlebars.registerHelper("multiply", function (value1, value2) {
+//     return value1 * value2;
+// });
+
+module.exports = handlebars;
