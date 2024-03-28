@@ -34,8 +34,8 @@ Handlebars.registerHelper("subtract", function (value1, value2) {
 });
 
 // Helper para multiplicar dos valores
-Handlebars.registerHelper("multiply", function (value1, value2) {
-    return value1 * value2;
-});
+// Handlebars.registerHelper("multiply", function (value1, value2) {
+//     return value1 * value2;
+// });
 
 module.exports = handlebars;
