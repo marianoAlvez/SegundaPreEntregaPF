@@ -12,6 +12,7 @@ class CartsService {
     if (!cart) {
       cart = await this.createCart();
     }
+    await this.calculateTotals(cart);
     return cart;
   }
 
@@ -20,7 +21,11 @@ class CartsService {
     //En este código, populate('products.product') le dice a Mongoose que remplaze
     //los IDs de los productos en el carrito con los documentos de productos completos
     //de la colección de productos.
-    return await this.cartsModel.findById(cid).populate("products.product");
+
+      const cart = await this.cartsModel.findById(cid).populate("products.product");
+      this.calculateTotals(cart);
+      return cart;
+    
   }
 
   // Este metodo crea un carrito vacio
@@ -29,26 +34,26 @@ class CartsService {
   }
 
   // Este metodo agrega un producto a un carrito
-  async addProductsToCart(cartId, productId, quantity) {
-    // quantity= Number(quantity);
+  async addProductsToCart(cid, pid, quantity) {
   
-    const cart = await this.cartsModel.findById(cartId);
+    const cart = await this.cartsModel.findById(cid);
     const product = cart.products.find(
-      (product) => product.product.toString() === productId.toString()
+      (product) => product.product.toString() === pid.toString()
     );
 
     if (product) {
       product.quantity += quantity;
     } else {
-      cart.products.push({ product: productId ,quantity });
+      cart.products.push({ product: pid ,quantity });
     }
 
+    await this.calculateTotals(cart);
     return await cart.save();
   }
 
     // Este metodo actualiza la cantidad de un producto en el carrito.
-    async updateProductQuantity(cartId, pid, quantity) {
-      const cart = await this.cartsModel.findById(cartId);
+    async updateProductQuantity(cid, pid, quantity) {
+      const cart = await this.cartsModel.findById(cid);
       const product = cart.products.find(
         (product) => product._id.toString() === pid
       );
@@ -58,7 +63,8 @@ class CartsService {
   
         // Si la nueva cantidad es 0, borro producto del carrito.
         if (newQuantity <= 0) {   
-          await this.removeProductFromCart(cartId, pid)
+          await this.removeProductFromCart(cid, pid)
+          await this.calculateTotals(cart);
           return;          
         }
         
@@ -68,17 +74,21 @@ class CartsService {
           newQuantity = productInDb?.stock;
         }
   
-        product.quantity = newQuantity;      }
-      return cart.save();
+        product.quantity = newQuantity;      
+      }
+
+      await this.calculateTotals(cart);
+      return await cart.save();
   }
 
   // Este metodo elimina un producto específico del carrito.
-  async removeProductFromCart(cartId, pid) {
-    const cart = await this.cartsModel.findById(cartId);
+  async removeProductFromCart(cid, pid) {
+    const cart = await this.cartsModel.findById(cid);
     cart.products = cart.products.filter(
       (product) => product._id.toString() !== pid
     );
-    return cart.save();
+    await this.calculateTotals(cart);
+    return await cart.save();
   }
 
   // Este metodo limpia un carrito.
@@ -88,8 +98,20 @@ class CartsService {
       throw new Error("El carrito no existe");
     }
     cart.products = [];
-    return cart.save();
+    return await cart.save();
   }
+
+  // Este metodo calcula los subTotales y totales de un carrito debe ser llamado cada vez que se modifica el carrito.
+  calculateTotals(cart) {
+    let total = 0;
+    for (let item of cart.products) {
+      item.subtotal = item.product.price * item.quantity;
+      total += item.subtotal;
+    }
+    cart.total = total;
+    return cart;
+  }
+
 }
 
 module.exports = CartsService;
